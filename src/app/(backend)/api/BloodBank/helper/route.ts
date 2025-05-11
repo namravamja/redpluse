@@ -15,7 +15,7 @@ const url = process.env.VERCEL_URL || "http://localhost:3000";
 
 // Helper functions - moved to helpers directory
 async function sendVerificationEmail(email: string, token: string) {
-  const verificationLink = `${url}/frontend/Verification/BloodBank?token=${token}`;
+  const verificationLink = `${url}/Verification/BloodBank?token=${token}`;
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -29,7 +29,7 @@ async function sendVerificationEmail(email: string, token: string) {
 }
 
 async function sendResetPasswordEmail(email: string, token: string) {
-  const resetLink = `${url}/frontend/ResetPassword/BloodBank?token=${token}`;
+  const resetLink = `${url}/ResetPassword/BloodBank?token=${token}`;
 
   const mailOptions = {
     from: process.env.EMAIL_USER,

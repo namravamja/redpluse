@@ -25,7 +25,7 @@ export async function sendVerificationEmail(email: string, token: string) {
 }
 
 export async function sendResetPasswordEmail(email: string, token: string) {
-  const resetLink = `${url}/frontend/ResetPassword?token=${token}`;
+  const resetLink = `${url}/ResetPassword?token=${token}`;
 
   const mailOptions = {
     from: process.env.EMAIL_USER,

@@ -17,7 +17,7 @@ const url = process.env.VERCEL_URL || "http://localhost:3000";
  * @param token Verification token
  */
 export async function sendVerificationEmail(email: string, token: string) {
-  const verificationLink = `${url}/frontend/Verification/EventOrganizer?token=${token}`;
+  const verificationLink = `${url}/Verification/EventOrganizer?token=${token}`;
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -36,7 +36,7 @@ export async function sendVerificationEmail(email: string, token: string) {
  * @param token Reset password token
  */
 export async function sendResetPasswordEmail(email: string, token: string) {
-  const resetLink = `${url}/frontend/ResetPassword/EventOrganizer?token=${token}`;
+  const resetLink = `${url}/ResetPassword/EventOrganizer?token=${token}`;
 
   const mailOptions = {
     from: process.env.EMAIL_USER,

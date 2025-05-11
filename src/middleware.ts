@@ -11,18 +11,17 @@ export function middleware(request: NextRequest) {
     /^\/api\/Login\/BloodBank$/,
     /^\/api\/Signup\/EventOrganizer$/,
     /^\/api\/Login\/EventOrganizer$/,
-    /^\/frontend\/Homepage$/,
-    /^\/frontend\/Login\/Donor$/,
-    /^\/frontend\/Signup\/Donor$/,
-    /^\/frontend\/Signup\/BloodBank$/,
-    /^\/frontend\/Login\/BloodBank$/,
-    /^\/frontend\/Signup\/EventOrganizer$/,
-    /^\/frontend\/Login\/EventOrganizer$/,
-    /^\/frontend\/Verification\/Donor(\/.*)?$/,
-    /^\/frontend\/Verification\/BloodBank(\/.*)?$/,
-    /^\/frontend\/Verification\/EventOrganizer(\/.*)?$/,
-    /^\/frontend\/Donor\/AuthSuccess$/, // ✅ Add this
-    /^\/frontend\/Looking-For-Blood\/ViewBloodBank$/, // ✅ Add this
+    /^\/Login\/Donor$/,
+    /^\/Signup\/Donor$/,
+    /^\/Signup\/BloodBank$/,
+    /^\/Login\/BloodBank$/,
+    /^\/Signup\/EventOrganizer$/,
+    /^\/Login\/EventOrganizer$/,
+    /^\/Verification\/Donor(\/.*)?$/,
+    /^\/Verification\/BloodBank(\/.*)?$/,
+    /^\/Verification\/EventOrganizer(\/.*)?$/,
+    /^\/Donor\/AuthSuccess$/, // ✅ Add this
+    /^\/Looking-For-Blood\/ViewBloodBank$/, // ✅ Add this
   ];
 
   const isPublicPath = publicPathPatterns.some((regex) => regex.test(pathname));
@@ -33,7 +32,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
 
   if (!token) {
-    return NextResponse.redirect(new URL("/frontend/Homepage?error=Authentication%20failed", request.url));
+    return NextResponse.redirect(new URL("/?error=Authentication%20failed", request.url));
   }
 
   return NextResponse.next();

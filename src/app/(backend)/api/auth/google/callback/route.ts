@@ -10,14 +10,14 @@ export async function GET(request: NextRequest) {
     const code = searchParams.get("code")
 
     if (!code) {
-      return NextResponse.redirect(new URL("/frontend/Homepage?error=No code provided", request.url))
+      return NextResponse.redirect(new URL("/?error=No code provided", request.url))
     }
 
     const result = await handleGoogleLogin(code)
 
     if (result.success) {
-      const response = NextResponse.redirect(new URL("/frontend/Donor/AuthSuccess", request.url),{status: 302,})
-      console.log("Redirecting to:", "/frontend/Donor/AuthSuccess");
+      const response = NextResponse.redirect(new URL("/Donor/AuthSuccess", request.url),{status: 302,})
+      console.log("Redirecting to:", "/Donor/AuthSuccess");
       response.cookies.set("token", result.token!, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -31,11 +31,11 @@ export async function GET(request: NextRequest) {
       });
       return response
     } else {
-      console.log("Redirecting to:", "/frontend/Homepage");
-      return NextResponse.redirect(new URL(`/frontend/Homepage?error=${result.error}`, request.url))
+      console.log("Redirecting to:", "/");
+      return NextResponse.redirect(new URL(`/?error=${result.error}`, request.url))
     }
   } catch (error) {
     console.error("Google callback error:", error)
-    return NextResponse.redirect(new URL("/frontend/Homepage?error=Authentication failed", request.url))
+    return NextResponse.redirect(new URL("/?error=Authentication failed", request.url))
   }
 }
