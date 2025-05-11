@@ -4,9 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
   reducerPath: "donorApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.VERCEL_URL
-      ? `${process.env.VERCEL_URL}/api`
-      : "http://localhost:3000/api",
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/api`,
   }),
   endpoints: (builder) => ({
     // Signup endpoint
