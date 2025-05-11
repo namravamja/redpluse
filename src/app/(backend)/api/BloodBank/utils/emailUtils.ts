@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const url = process.env.VERCEL_URL || "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 /**
  * Sends verification email to the user

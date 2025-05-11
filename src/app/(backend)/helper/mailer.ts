@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const url = process.env.VERCEL_URL || "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 export async function sendVerificationEmail(email: string, token: string) {
   const verificationLink = `${url}/api/verify-email?token=${token}`;

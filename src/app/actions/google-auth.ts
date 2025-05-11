@@ -11,8 +11,8 @@ const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 // Dynamically determine the redirect URI based on environment
-const REDIRECT_URI = process.env.VERCEL_URL
-  ? `${process.env.VERCEL_URL}/api/auth/google/callback`
+const REDIRECT_URI = process.env.NEXT_PUBLIC_API_URL
+  ? `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google/callback`
   : `http://localhost:3000/api/auth/google/callback`;
 
 // Generate the Google OAuth URL
