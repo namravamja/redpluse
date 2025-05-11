@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "https://redpluse.vercel.app", // Change to your frontend domain in production
+  "Access-Control-Allow-Origin": "https://redpluse.vercel.app", // or '*', if for dev
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
@@ -9,7 +9,6 @@ const CORS_HEADERS = {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Handle OPTIONS requests for CORS preflight
   if (request.method === "OPTIONS") {
     const response = new NextResponse(null, { status: 204 });
     Object.entries(CORS_HEADERS).forEach(([key, value]) => {
@@ -40,8 +39,13 @@ export function middleware(request: NextRequest) {
   ];
 
   const isPublicPath = publicPathPatterns.some((regex) => regex.test(pathname));
+
   if (isPublicPath) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    Object.entries(CORS_HEADERS).forEach(([key, value]) => {
+      response.headers.set(key, value);
+    });
+    return response;
   }
 
   const token = request.cookies.get("token")?.value;
@@ -53,8 +57,6 @@ export function middleware(request: NextRequest) {
   }
 
   const response = NextResponse.next();
-
-  // Apply CORS headers
   Object.entries(CORS_HEADERS).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
@@ -63,5 +65,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/:path*", "/_next/data/:hash/api/:path*"],
+  matcher: ["/api/:path*"],
 };
