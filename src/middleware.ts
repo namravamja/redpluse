@@ -63,16 +63,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    // API routes
-    '/api/:path*',
-    '/api/BloodBank/All',
-    // Routes for specific sections
-    '/Verification/:path*',
-    '/Donor/:path*',
-    '/Looking-For-Blood/:path*',
-    
-    // This pattern safely matches Next.js data routes
-    '/_next/data/:hash/api/:path*',
-  ],
+  matcher: ["/api/:path*", "/_next/data/:hash/api/:path*"],
 };
