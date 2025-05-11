@@ -66,7 +66,7 @@ export const config = {
   matcher: [
     // API routes
     '/api/:path*',
-    
+    '/api/BloodBank/All',
     // Routes for specific sections
     '/Verification/:path*',
     '/Donor/:path*',
