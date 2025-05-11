@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*", // Change to your frontend domain in production
+  "Access-Control-Allow-Origin": "https://redpluse.vercel.app/", // Change to your frontend domain in production
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
