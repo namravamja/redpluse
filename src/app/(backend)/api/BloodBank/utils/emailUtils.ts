@@ -1,4 +1,3 @@
-// src/app/(backend)/api/BloodBank/utils/emailUtils.ts
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
@@ -18,15 +17,17 @@ const url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
  */
 export async function sendVerificationEmail(email: string, token: string) {
   const verificationLink = `${url}/Verification/BloodBank?token=${token}`;
-
+  
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
     subject: "Verify Your Email",
-    html: `<p>Please verify your email by clicking the link below:</p>
-           <a href="${verificationLink}">Verify Email</a>`,
+    html: `
+      <p>Please verify your email by clicking the link below:</p>
+      <a href="${verificationLink}">Verify Email</a>
+    `,
   };
-
+  
   await transporter.sendMail(mailOptions);
 }
 
@@ -37,14 +38,16 @@ export async function sendVerificationEmail(email: string, token: string) {
  */
 export async function sendResetPasswordEmail(email: string, token: string) {
   const resetLink = `${url}/ResetPassword/BloodBank?token=${token}`;
-
+  
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
     subject: "Reset Your Password",
-    html: `<p>Click the link below to reset your password:</p>
-           <a href="${resetLink}">Reset Password</a>`,
+    html: `
+      <p>Click the link below to reset your password:</p>
+      <a href="${resetLink}">Reset Password</a>
+    `,
   };
-
+  
   await transporter.sendMail(mailOptions);
 }

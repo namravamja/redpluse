@@ -19,9 +19,15 @@ export async function POST(req: Request) {
     const resetToken = jwt.sign({ email }, process.env.JWT_SECRET!, { expiresIn: "1h" });
 
     // Save reset token and expiry in DB
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpire = new Date(Date.now() + 60 * 60 * 1000); // 1 hour expiry
-    await user.save();
+    await Donor.findOneAndUpdate(
+  { email },
+  {
+    resetPasswordToken: resetToken,
+    resetPasswordExpire: new Date(Date.now() + 60 * 60 * 1000),
+  },
+  { new: true }
+)
+
 
     console.log("🛠️ Generated Reset Token:", resetToken);
 
