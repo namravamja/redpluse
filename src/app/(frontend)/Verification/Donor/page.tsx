@@ -23,7 +23,7 @@ const Page = () => {
           "Email verified successfully! Redirecting to login page..."
         );
         setTimeout(() => {
-          router.push(" /Login/Donor");
+          router.push("/Login/Donor");
         }, 1500);
       } else {
         toast.error("Token is missing. Please check the URL.");
@@ -44,7 +44,7 @@ const Page = () => {
       <p className="text-lg text-gray-600 mb-8">
         Please check your email to verify your account before logging in.
       </p>
-      <Link href=" /Login/EventOrganizer">
+      <Link href=" /Login/Donor">
         <Button
           onClick={verification}
           className="px-6 py-3 bg-blue-600 text-white rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300"
