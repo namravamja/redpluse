@@ -15,7 +15,7 @@ const AuthSuccess = () => {
       if (hasToken || justLoggedIn) {
         document.cookie = "justLoggedIn=; Max-Age=0; path=/";
         clearInterval(interval);
-        router.push(" /Donor/Profile");
+        router.push("/Donor/Profile");
       }
     }, 300); // check every 300ms
 

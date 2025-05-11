@@ -31,8 +31,6 @@ const DonorSchema = new mongoose.Schema(
     },
     Adhar: {
       type: String,
-      minlength: [12, "Aadhar number must be at only 12 characters long"],
-      maxlength: [12, "Aadhar number must be at only 12 characters long"],
     },
     bloodGroup: {
       type: String,
@@ -41,17 +39,14 @@ const DonorSchema = new mongoose.Schema(
     age: {
       type: String,
       required: false,
-      
     },
     height: {
       type: String,
       required: false,
-      
     },
     weight: {
       type: String,
       required: false,
-      
     },
     bmi: {
       type: String,
@@ -107,10 +102,10 @@ const DonorSchema = new mongoose.Schema(
       type: Date,
       required: false,
     },
-    authProvider: { 
-      type: String, 
-      enum: ["custom", "google"], 
-      default: "custom" 
+    authProvider: {
+      type: String,
+      enum: ["custom", "google"],
+      default: "custom",
     },
     certificates: [
       {
@@ -134,7 +129,6 @@ const DonorSchema = new mongoose.Schema(
           type: String,
           required: false,
         },
-
       },
     ],
   },

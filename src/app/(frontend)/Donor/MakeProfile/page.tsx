@@ -146,7 +146,7 @@ export default function Page() {
                           htmlFor={field}
                           className="text-sm font-medium text-gray-700"
                         >
-                          {field.charAt(0).toUpperCase() + field.slice(1)}
+                          {field.charAt(0).toUpperCase() + field.slice(1)}*
                         </Label>
                         <Input
                           id={field}
@@ -262,7 +262,7 @@ export default function Page() {
 
                   <div>
                     <Label className="text-sm font-medium text-gray-700">
-                      Blood Group
+                      Blood Group*
                     </Label>
                     <select
                       className="w-full p-2 border rounded-md border-gray-300 font-light"

@@ -9,7 +9,6 @@ const ProfileDisplay = () => {
     refetchOnMountOrArgChange: true,
   });
 
-
   // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: </div>;
@@ -19,13 +18,15 @@ const ProfileDisplay = () => {
 
   console.log("data : ", data);
 
-  const bloodGroup = data.bloodGroup
- 
+  const bloodGroup = data.bloodGroup;
+  const aadhar = data.Adhar;
+
   return (
     <div className="bg-blue-50/80 p-8 flex flex-col justify-center items-center">
-      {!bloodGroup && (
+      {!(bloodGroup && aadhar) && (
         <div className="text-red-900 font-extrabold bg-yellow-300/50 p-5 border-l-[15px] border-red-800 mb-10">
-          Add your Blood Group & Aadhar no. from update section to retrieve certification
+          Add your Blood Group & Aadhar no. from update section to retrieve
+          certification
         </div>
       )}
       <div className="w-full max-w-4xl bg-blue-50/10  p-6 rounded-lg shadow-2xl flex gap-8">
