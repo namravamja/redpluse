@@ -1,68 +1,85 @@
 import { type NextRequest, NextResponse } from "next/server";
 
+/**
+ * CORS headers configuration
+ * This allows requests from your production domain
+ */
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "https://redpluse.vercel.app", // Your production domain
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
   "Access-Control-Allow-Headers":
-    "Content-Type, Authorization, X-Requested-With",
+    "Content-Type, Authorization, X-Requested-With, Accept",
   "Access-Control-Allow-Credentials": "true",
   "Access-Control-Max-Age": "86400", // 24 hours cache for preflight requests
 };
 
+/**
+ * Apply CORS headers to any response
+ */
+function applyCorsHeaders(response: NextResponse): NextResponse {
+  Object.entries(CORS_HEADERS).forEach(([key, value]) => {
+    response.headers.set(key, value);
+  });
+  return response;
+}
+
 export function middleware(request: NextRequest) {
-  // Handle preflight requests
+  // Handle preflight OPTIONS requests for all paths
   if (request.method === "OPTIONS") {
-    const response = new NextResponse(null, { status: 204 });
-    Object.entries(CORS_HEADERS).forEach(([key, value]) => {
-      response.headers.set(key, value);
-    });
-    return response;
+    return applyCorsHeaders(new NextResponse(null, { status: 204 }));
   }
 
   const { pathname } = request.nextUrl;
 
-  // Comprehensive list of public paths that don't need authentication
-  const publicPathPatterns = [
-    // Auth routes
-    /^\/api\/auth(?:\/.*)?$/,
+  // List of paths that should be publicly accessible without authentication
+  const publicPathPrefixes = [
+    // Authentication flows
+    "/api/auth",
+    "/auth",
 
-    // Signup routes
-    /^\/api\/Signup\/(?:Donor|BloodBank|EventOrganizer)(?:\/.*)?$/,
-    /^\/Signup\/(?:Donor|BloodBank|EventOrganizer)(?:\/.*)?$/,
+    // Signup paths
+    "/api/Signup",
+    "/Signup",
 
-    // Login routes
-    /^\/api\/Login\/(?:Donor|BloodBank|EventOrganizer)(?:\/.*)?$/,
-    /^\/Login\/(?:Donor|BloodBank|EventOrganizer)(?:\/.*)?$/,
+    // Login paths
+    "/api/Login",
+    "/Login",
 
-    // Verification routes
-    /^\/Verification\/(?:Donor|BloodBank|EventOrganizer)(?:\/.*)?$/,
+    // Verification paths
+    "/api/Verification",
+    "/Verification",
 
-    // Password recovery routes
-    /^\/api\/(?:Donor|BloodBank|EventOrganizer)\/(?:forgot-password|reset-password)(?:\/.*)?$/,
+    // Password reset flows
+    "/api/forgot-password",
+    "/api/reset-password",
+    "/forgot-password",
+    "/reset-password",
 
-    // Public information routes
-    /^\/api\/Looking-For-Blood\/ViewBloodBank$/,
-    /^\/Looking-For-Blood\/ViewBloodBank$/,
+    // Specific public endpoints
+    "/api/Looking-For-Blood",
+    "/Looking-For-Blood",
+    "/api/Donor/AuthSuccess",
+    "/Donor/AuthSuccess",
 
-    // Success routes
-    /^\/Donor\/AuthSuccess$/,
+    // Email verification endpoints
+    "/api/verify-email",
+    "/verify-email",
 
-    // Health check route
-    /^\/api\/health$/,
+    // Health check
+    "/api/health",
   ];
 
-  const isPublicPath = publicPathPatterns.some((regex) => regex.test(pathname));
+  // Check if current path is public
+  const isPublicPath = publicPathPrefixes.some((prefix) =>
+    pathname.startsWith(prefix)
+  );
 
+  // Allow public paths without authentication
   if (isPublicPath) {
-    const response = NextResponse.next();
-    // Apply CORS headers to all responses
-    Object.entries(CORS_HEADERS).forEach(([key, value]) => {
-      response.headers.set(key, value);
-    });
-    return response;
+    return applyCorsHeaders(NextResponse.next());
   }
 
-  // For protected routes, check for authentication token
+  // For protected routes, verify authentication
   const token = request.cookies.get("token")?.value;
 
   if (!token) {
@@ -71,16 +88,14 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  // Continue with the request if authenticated
-  const response = NextResponse.next();
-  // Apply CORS headers to all responses
-  Object.entries(CORS_HEADERS).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
-
-  return response;
+  // Allow authenticated requests to proceed
+  return applyCorsHeaders(NextResponse.next());
 }
 
+/**
+ * This config specifies which routes this middleware applies to
+ * Using a broad matcher to catch all API routes
+ */
 export const config = {
   matcher: ["/api/:path*"],
 };
