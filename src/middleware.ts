@@ -22,6 +22,7 @@ export function middleware(request: NextRequest) {
     /^\/api\/Donor\/verify-email$/,
     /^\/api\/Donor\/forgot-password$/,
     /^\/api\/Donor\/reset-password$/,
+    /^\/api\/auth\/google\/callback$/,
     /^\/api\/Donor\/utils$/,
     /^\/api\/Signup\/Donor$/,
     /^\/api\/Login\/Donor$/,
@@ -48,6 +49,7 @@ export function middleware(request: NextRequest) {
     /^\/Verification\/BloodBank(\/.)?$/,
     /^\/Verification\/EventOrganizer(\/.)?$/,
     /^\/Donor\/AuthSuccess$/,
+
     /^\/Looking-For-Blood\/ViewBloodBank$/,
   ];
 
