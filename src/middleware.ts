@@ -25,6 +25,7 @@ export function middleware(request: NextRequest) {
     /^\/api\/auth\/google\/callback$/,
     /^\/api\/Donor\/utils$/,
     /^\/api\/Donor\/profilePhoto$/,
+    /^\/Config$/,
     /^\/api\/Signup\/Donor$/,
     /^\/api\/Login\/Donor$/,
     /^\/api\/BloodBank\/verify-email$/,
