@@ -132,7 +132,6 @@ export default function LoginPage() {
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-md border-gray-300 font-light"
-                      required
                       value={formData.email}
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
@@ -153,7 +152,6 @@ export default function LoginPage() {
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
                         className="w-full pr-10 rounded-md border-gray-300 font-light"
-                        required
                         value={formData.password}
                         onChange={(e) =>
                           setFormData({ ...formData, password: e.target.value })

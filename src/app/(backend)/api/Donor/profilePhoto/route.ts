@@ -8,11 +8,8 @@ interface CloudinaryResponse {
   secure_url: string;
 }
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
