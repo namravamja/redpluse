@@ -86,7 +86,7 @@ const Page = () => {
           </ul>
         </div>
         <div>
-          <Link href=" /Seeker/ViewBloodBank">
+          <Link href="/Looking-For-Blood/ViewBloodBank">
             <Button
               type="submit"
               className="h-14 border-4 rounded-3xl mt-8 bg-red-600 text-white p-2 font-extrabold pl-8 pr-8 text-[16px] hover:bg-white hover:text-red-600 border-red-600"

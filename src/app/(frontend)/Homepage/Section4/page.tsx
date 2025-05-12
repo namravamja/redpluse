@@ -31,7 +31,7 @@ const page = () => {
         <div className="text-[30px] text-center text-gray-600 opacity-80 font-bold mt-4 w-[600px] ">
           Your Donation Matters!
         </div>
-        <Link href=" /DonorRegistration" passHref>
+        <Link href=" /Login/Donor" passHref>
           <Button
             type="submit"
             className="h-14 border-4 border-red-600 rounded-3xl mt-8  bg-red-600 text-white p-2 font-extrabold pl-8 pr-8 text-[16px] hover:bg-white hover:text-red-600   "
