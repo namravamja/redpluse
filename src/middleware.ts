@@ -55,7 +55,12 @@ export function middleware(request: NextRequest) {
     /^\/Looking-For-Blood\/ViewBloodBank$/,
   ];
 
-  const isPublicPath = publicPathPatterns.some((regex) => regex.test(pathname));
+  // Check if the request is for a public path
+  const isPublicPath = publicPathPatterns.some((regex) => {
+    const match = regex.test(pathname);
+    console.log(`Testing path: ${pathname}, match: ${match}`);
+    return match;
+  });
 
   if (isPublicPath) {
     const response = NextResponse.next();
@@ -65,14 +70,23 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
-  const token = request.cookies.get("token")?.value;
+  // Log request details
+  console.log("Request Path:", pathname);
 
+  // Get token from cookies or headers
+  const token =
+    request.cookies.get("token")?.value ||
+    request.headers.get("Authorization")?.replace("Bearer ", "");
+  console.log("Token Found:", token);
+
+  // If token is missing, redirect to login
   if (!token) {
     return NextResponse.redirect(
       new URL("/?error=Authentication%20failed", request.url)
     );
   }
 
+  // Proceed with request
   const response = NextResponse.next();
   Object.entries(CORS_HEADERS).forEach(([key, value]) => {
     response.headers.set(key, value);
@@ -80,7 +94,6 @@ export function middleware(request: NextRequest) {
 
   return response;
 }
-
 export const config = {
   matcher: ["/api/:path*"],
 };
