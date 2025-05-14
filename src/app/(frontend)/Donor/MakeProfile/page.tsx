@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { Pen } from "lucide-react";
 import Image from "next/image";
 
+// Sample state-city data (add more as needed)
 const statesAndCities: Record<string, string[]> = {
   Gujarat: ["Ahmedabad", "Surat", "Vadodara"],
   Maharashtra: ["Mumbai", "Pune", "Nagpur"],
@@ -124,29 +125,37 @@ export default function Page() {
       `}</style>
 
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col md:flex-row bg-blue-50/80">
-          {/* Left: Form */}
+        <div className="flex flex-col max-h-screen md:flex-row bg-blue-50/80">
+          {/* Left side - Profile Form */}
           <div className="w-full md:w-4/5 p-8 z-10">
             <div className="max-w-2xl mx-auto">
               <h1 className="font-heading text-3xl font-extrabold mb-1 text-blue-950 tracking-tight">
                 PROFILE UPDATE
               </h1>
-              <p className="text-gray-700 mb-4 font-light text-base leading-relaxed">
+              <p className="text-gray-700 mb-2 font-light text-base leading-relaxed">
                 Update your donor information to keep your profile current.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* LEFT COLUMN */}
                 <div className="space-y-2">
                   {["fullName", "email", "Adhar", "contactNumber"].map(
                     (field) => (
                       <div key={field}>
-                        <Label htmlFor={field}>
+                        <Label
+                          htmlFor={field}
+                          className="text-sm font-medium text-gray-700"
+                        >
                           {field.charAt(0).toUpperCase() + field.slice(1)}*
                         </Label>
                         <Input
                           id={field}
                           type="text"
-                          value={userDetails[field as keyof typeof userDetails] || ""}
+                          placeholder={`Enter your ${field}`}
+                          className="w-full rounded-md border-gray-300 font-light"
+                          value={
+                            userDetails[field as keyof typeof userDetails] || ""
+                          }
                           onChange={(e) =>
                             setUserDetails({
                               ...userDetails,
@@ -159,9 +168,11 @@ export default function Page() {
                   )}
 
                   <div>
-                    <Label>Gender</Label>
+                    <Label className="text-sm font-medium text-gray-700">
+                      Gender
+                    </Label>
                     <select
-                      className="w-full border rounded-md p-2"
+                      className="w-full p-2 border rounded-md border-gray-300 font-light"
                       value={userDetails.gender}
                       onChange={(e) =>
                         setUserDetails({
@@ -178,9 +189,11 @@ export default function Page() {
                   </div>
 
                   <div>
-                    <Label>State</Label>
+                    <Label className="text-sm font-medium text-gray-700">
+                      State
+                    </Label>
                     <select
-                      className="w-full border rounded-md p-2"
+                      className="w-full p-2 border rounded-md border-gray-300 font-light"
                       value={userDetails.state}
                       onChange={(e) =>
                         setUserDetails({
@@ -198,9 +211,11 @@ export default function Page() {
                   </div>
 
                   <div>
-                    <Label>City</Label>
+                    <Label className="text-sm font-medium text-gray-700">
+                      City
+                    </Label>
                     <select
-                      className="w-full border rounded-md p-2"
+                      className="w-full p-2 border rounded-md border-gray-300 font-light"
                       value={userDetails.city}
                       onChange={(e) =>
                         setUserDetails({ ...userDetails, city: e.target.value })
@@ -208,23 +223,33 @@ export default function Page() {
                       disabled={!userDetails.state}
                     >
                       <option value="">Select City</option>
-                      {(statesAndCities[userDetails.state] || []).map((city) => (
-                        <option key={city}>{city}</option>
-                      ))}
+                      {(statesAndCities[userDetails.state] || []).map(
+                        (city) => (
+                          <option key={city}>{city}</option>
+                        )
+                      )}
                     </select>
                   </div>
                 </div>
 
+                {/* RIGHT COLUMN */}
                 <div className="space-y-2">
                   {["country", "address", "pincode"].map((field) => (
                     <div key={field}>
-                      <Label htmlFor={field}>
+                      <Label
+                        htmlFor={field}
+                        className="text-sm font-medium text-gray-700"
+                      >
                         {field.charAt(0).toUpperCase() + field.slice(1)}
                       </Label>
                       <Input
                         id={field}
                         type="text"
-                        value={userDetails[field as keyof typeof userDetails] || ""}
+                        placeholder={`Enter your ${field}`}
+                        className="w-full rounded-md border-gray-300 font-light"
+                        value={
+                          userDetails[field as keyof typeof userDetails] || ""
+                        }
                         onChange={(e) =>
                           setUserDetails({
                             ...userDetails,
@@ -236,9 +261,11 @@ export default function Page() {
                   ))}
 
                   <div>
-                    <Label>Blood Group*</Label>
+                    <Label className="text-sm font-medium text-gray-700">
+                      Blood Group*
+                    </Label>
                     <select
-                      className="w-full border rounded-md p-2"
+                      className="w-full p-2 border rounded-md border-gray-300 font-light"
                       value={userDetails.bloodGroup}
                       onChange={(e) =>
                         setUserDetails({
@@ -247,23 +274,37 @@ export default function Page() {
                         })
                       }
                     >
-                      {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(
-                        (group) => (
-                          <option key={group} value={group}>
-                            {group || "Select Blood Group"}
-                          </option>
-                        )
-                      )}
+                      {[
+                        "",
+                        "A+",
+                        "A-",
+                        "B+",
+                        "B-",
+                        "AB+",
+                        "AB-",
+                        "O+",
+                        "O-",
+                      ].map((group) => (
+                        <option key={group} value={group}>
+                          {group || "Select Blood Group"}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
                   <div className="grid grid-cols-3 gap-2">
                     {["age", "height", "weight"].map((field) => (
                       <div key={field}>
-                        <Label>{field}</Label>
+                        <Label className="text-sm font-medium text-gray-700">
+                          {field.charAt(0).toUpperCase() + field.slice(1)}
+                        </Label>
                         <Input
                           type="number"
-                          value={userDetails[field as keyof typeof userDetails] || ""}
+                          placeholder={field}
+                          className="w-full rounded-md border-gray-300 font-light"
+                          value={
+                            userDetails[field as keyof typeof userDetails] || ""
+                          }
                           onChange={(e) =>
                             setUserDetails({
                               ...userDetails,
@@ -276,19 +317,26 @@ export default function Page() {
                   </div>
 
                   <div>
-                    <Label>BMI</Label>
-                    <Input value={bmi} readOnly className="bg-gray-100" />
+                    <Label className="text-sm font-medium text-gray-700">
+                      BMI
+                    </Label>
+                    <Input
+                      type="text"
+                      value={bmi}
+                      readOnly
+                      className="bg-gray-100 w-full rounded-md border-gray-300 font-light"
+                    />
                     <p className="text-xs text-gray-500">
-                      Calculated from height and weight
+                      Calculated from Age, Height, and Weight
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-10">
                 <Button
                   type="submit"
-                  className="w-full bg-blue-950 hover:bg-blue-800"
+                  className="w-full bg-blue-950 hover:bg-blue-800 py-2 rounded-md font-medium text-base"
                 >
                   {isUpload
                     ? "Uploading..."
@@ -300,24 +348,79 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: Profile Photo */}
-          <div className="hidden md:flex md:w-2/5 items-center justify-center bg-white relative">
-            <div className="w-56 h-56 relative">
-              <Image
-                src={photoPreview || "/default-profile.png"}
-                alt="Profile"
-                fill
-                className="rounded-full object-cover"
-              />
-              <label className="absolute bottom-0 right-0 bg-blue-600 p-2 rounded-full cursor-pointer">
-                <Pen className="w-4 h-4 text-white" />
+          {/* Right Side - Photo (Desktop) */}
+          <div className="hidden md:block md:w-2/5 bg-transparent relative">
+            <div
+              className="absolute inset-0"
+              style={{
+                clipPath: "polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                backgroundColor: "#ffffff",
+                zIndex: 0,
+              }}
+            >
+              <div className="flex pl-11 flex-col items-center justify-center h-full">
+                <div className="mb-4 relative">
+                  <Image
+                    src={photoPreview || "/Avatar.svg"}
+                    alt="Profile"
+                    width={300}
+                    height={300}
+                    className="rounded-full border-2 border-gray-300 object-cover shadow-lg"
+                  />
+                  <input
+                    id="photo-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoUpload}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="photo-upload"
+                    className="absolute bottom-2 right-2 bg-blue-950 text-white p-2 rounded-full cursor-pointer shadow-md hover:bg-blue-800"
+                  >
+                    <Pen size={16} />
+                  </label>
+                </div>
+                <h3 className="font-heading font-semibold text-xl text-blue-950">
+                  {userDetails.fullName || "Your Profile"}
+                </h3>
+                <p className="text-gray-600 font-light">
+                  {userDetails.bloodGroup
+                    ? `Blood Group: ${userDetails.bloodGroup}`
+                    : "Update your details"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Photo */}
+          <div className="md:hidden flex justify-center items-center p-6">
+            <div className="flex flex-col items-center">
+              <div className="mb-4 relative">
+                <Image
+                  src={photoPreview || "/Avatar.svg"}
+                  alt="Profile"
+                  width={120}
+                  height={120}
+                  className="rounded-full border-2 border-gray-300 object-cover shadow-lg"
+                />
                 <input
+                  id="photo-upload-mobile"
                   type="file"
                   accept="image/*"
                   onChange={handlePhotoUpload}
                   className="hidden"
                 />
-              </label>
+                <label
+                  htmlFor="photo-upload-mobile"
+                  className="absolute bottom-1 right-1 bg-blue-950 text-white p-1.5 rounded-full cursor-pointer shadow-md hover:bg-blue-800"
+                >
+                  <Pen size={12} />
+                </label>
+              </div>
+              <h3 className="font-heading font-semibold text-lg text-blue-950">
+                {userDetails.fullName || "Your Profile"}
+              </h3>
             </div>
           </div>
         </div>
