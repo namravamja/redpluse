@@ -93,20 +93,9 @@ export default function Page() {
       if (photoFile) {
         const formData = new FormData();
         formData.append("photo", photoFile);
-        
-        try {
-          const res = await uploadProfilePhoto(formData).unwrap();
-          if (res && res.url) {
-            userDetails.ProfilePhoto = res.url;
-            toast.success("Photo uploaded successfully");
-          } else {
-            toast.error("Photo upload response missing URL");
-            console.error("Invalid photo upload response:", res);
-          }
-        } catch (error) {
-          toast.error("Photo upload failed");
-          console.error("Photo upload error:", error);
-        }
+        const res = await uploadProfilePhoto(formData).unwrap();
+        userDetails.ProfilePhoto = res.url;
+        toast.success("Photo uploaded successfully");
       }
 
       await updateUserData(userDetails).unwrap();
@@ -114,33 +103,7 @@ export default function Page() {
       toast.success("Profile updated successfully");
     } catch (error) {
       toast.error("Update failed");
-      console.error("Profile update error:", error);
-    }
-  };
-
-  // Debug information - helpful during development
-  const debugUploadIssue = () => {
-    const formData = new FormData();
-    if (photoFile) {
-      formData.append("photo", photoFile);
-      console.log("Attempting manual API call for debugging");
-      fetch('/api/Donor/profilePhoto', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => {
-        console.log('Debug - Status:', response.status);
-        return response.text();
-      })
-      .then(text => {
-        try {
-          const data = text ? JSON.parse(text) : {};
-          console.log('Debug - Response:', data);
-        } catch (e) {
-          console.log('Debug - Raw response:', text);
-        }
-      })
-      .catch(error => console.error('Debug - Error:', error));
+      console.error(error);
     }
   };
 

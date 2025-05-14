@@ -12,57 +12,49 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
-  try {
-    const formData = await req.formData();
-    const file = formData.get("photo") as File;
+  const formData = await req.formData();
+  const file = formData.get("photo") as File;
 
-    if (!file) {
-      return NextResponse.json({ error: "Missing file" }, { status: 400 });
-    }
-
-    const auth = await verifyUser();
-    if (typeof auth === "object" && "error" in auth) {
-      return NextResponse.json(auth, { status: auth.status });
-    }
-
-    const userId = auth;
-
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    const cloudinaryRes = await new Promise<CloudinaryResponse>(
-      (resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          { folder: "donor_profile_photos" },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result as CloudinaryResponse);
-          }
-        );
-
-        stream.end(buffer);
-      }
-    );
-
-    const imageUrl = cloudinaryRes.secure_url;
-
-    await connectDB();
-    const updatedDonor = await Donor.findByIdAndUpdate(
-      userId,
-      { ProfilePhoto: imageUrl },
-      { new: true }
-    );
-
-    return NextResponse.json({
-      message: "Image uploaded",
-      url: imageUrl, // Make sure this matches what your frontend expects
-      donor: updatedDonor,
-    });
-  } catch (error) {
-    console.error("Profile photo upload error:", error);
-    return NextResponse.json(
-      { error: "Failed to upload profile photo" },
-      { status: 500 }
-    );
+  if (!file) {
+    return NextResponse.json({ error: "Missing file" }, { status: 400 });
   }
+
+  const auth = await verifyUser();
+  if (typeof auth === "object" && "error" in auth) {
+    return NextResponse.json(auth, { status: auth.status });
+  }
+
+  const userId = auth;
+
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  const cloudinaryRes = await new Promise<CloudinaryResponse>(
+    (resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: "donor_profile_photos" },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result as CloudinaryResponse); // Ensure the result is typed correctly
+        }
+      );
+
+      stream.end(buffer);
+    }
+  );
+
+  const imageUrl = cloudinaryRes.secure_url;
+
+  await connectDB();
+  const updatedDonor = await Donor.findByIdAndUpdate(
+    userId,
+    { ProfilePhoto: imageUrl },
+    { new: true }
+  );
+
+  return NextResponse.json({
+    message: "Image uploaded",
+    photo: imageUrl,
+    donor: updatedDonor,
+  });
 }
