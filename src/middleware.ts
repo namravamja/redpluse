@@ -24,7 +24,7 @@ export function middleware(request: NextRequest) {
     /^\/api\/Donor\/reset-password$/,
     /^\/api\/auth\/google\/callback$/,
     /^\/api\/Donor\/utils$/,
-    /^\/api\/Donor\/profilePhoto$/,
+    /^\/Donor\/profilePhoto$/,
     /^\/Config$/,
     /^\/api\/Signup\/Donor$/,
     /^\/api\/Login\/Donor$/,
