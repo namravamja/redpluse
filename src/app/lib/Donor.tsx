@@ -53,7 +53,7 @@ export const api = createApi({
 
 uploadProfilePhoto: builder.mutation<{ url: string }, FormData>({
   query: (formData) => ({
-    url: "/api/Donor/profilePhoto", // Add the missing /api prefix
+    url: "/Donor/profilePhoto", // Add the missing /api prefix
     method: "POST",
     body: formData,
   }),
