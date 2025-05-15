@@ -51,6 +51,7 @@ export function middleware(request: NextRequest) {
     /^\/Verification\/BloodBank(\/.)?$/,
     /^\/Verification\/EventOrganizer(\/.)?$/,
     /^\/Donor\/AuthSuccess$/,
+
     /^\/Looking-For-Blood\/ViewBloodBank$/,
   ];
 
